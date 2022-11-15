@@ -9,6 +9,18 @@ package applibrary;
  * @author Asus
  */
 
+class Session{
+    private String userId;
+    
+    public void setUserId(String x){
+        this.userId = x;
+    }
+    
+    public String getUserId(){
+        return this.userId;
+    }
+}
+
 public class AppLibrary {
 
     /**

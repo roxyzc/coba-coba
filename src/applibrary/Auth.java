@@ -15,7 +15,6 @@ import java.sql.*;
  * @author Asus
  */
 public class Auth extends javax.swing.JFrame {
-
     /**
      * Creates new form Auth
      */
@@ -302,9 +301,11 @@ public class Auth extends javax.swing.JFrame {
                 ResultSet rs = st.executeQuery(query);
                 String AUser = null;
                 String Apassword = null;
+                String AID = null;
                 while(rs.next()){
                     AUser = rs.getString("username");
                     Apassword = rs.getString("password");
+                    AID = rs.getString("userID");
                 }
                 st.close();
       
@@ -326,6 +327,7 @@ public class Auth extends javax.swing.JFrame {
             }else{
                 Menu n = new Menu();
                 this.setVisible(false);
+                Menu.session.setUserId(AID);
                 n.setVisible(true);
         }
         } catch (SQLException ex) {
@@ -363,7 +365,7 @@ public class Auth extends javax.swing.JFrame {
                 var preparedStmt = ConnectDB().prepareStatement(sql);
                 preparedStmt.execute();
                 ConnectDB().close();
-                 Menu n = new Menu();
+                Menu n = new Menu();
                 this.setVisible(false);
                 n.setVisible(true);
             }

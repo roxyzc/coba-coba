@@ -18,10 +18,10 @@ import javax.swing.table.DefaultTableModel;
  * @author Asus
  */
 public class Menu extends javax.swing.JFrame {
-
     /**
      * Creates new form Menu
      */
+     public static Session session = new Session();
      private static Connection connect;
      public static Connection ConnectDB() throws SQLException{
         try {
@@ -58,6 +58,7 @@ public class Menu extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tableUser = new javax.swing.JTable();
         BMLihat = new javax.swing.JButton();
+        MBProfile = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -92,26 +93,36 @@ public class Menu extends javax.swing.JFrame {
             }
         });
 
+        MBProfile.setText("profile");
+        MBProfile.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MBProfileMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(188, 188, 188)
-                        .addComponent(BMLihat)))
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(47, 47, 47)
+                .addComponent(BMLihat)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(MBProfile)
+                .addGap(90, 90, 90))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(BMLihat)
-                .addGap(26, 26, 26)
+                .addGap(25, 25, 25)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(BMLihat)
+                    .addComponent(MBProfile))
+                .addGap(29, 29, 29)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(14, Short.MAX_VALUE))
         );
@@ -161,7 +172,7 @@ public class Menu extends javax.swing.JFrame {
             tableModel.getDataVector().removeAllElements();
             
             
-            resultSet = statement.executeQuery("SELECT * FROM tb_users WHERE userID='1'");
+            resultSet = statement.executeQuery("SELECT * FROM tb_users");
             while(resultSet.next()){
                 Object[] data = {
                     resultSet.getString("userID"),
@@ -176,6 +187,13 @@ public class Menu extends javax.swing.JFrame {
          }
         
     }//GEN-LAST:event_BMLihatMouseClicked
+
+    private void MBProfileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MBProfileMouseClicked
+        // TODO add your handling code here:
+        Profile p = new Profile();
+        this.setVisible(false);
+        p.setVisible(true);
+    }//GEN-LAST:event_MBProfileMouseClicked
 
     /**
      * @param args the command line arguments
@@ -214,6 +232,7 @@ public class Menu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BMLihat;
+    private javax.swing.JButton MBProfile;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
