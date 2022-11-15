@@ -9,6 +9,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.sql.*;
 /**
  *
  * @author Asus
@@ -291,27 +292,44 @@ public class Auth extends javax.swing.JFrame {
 
     private void LBtnLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LBtnLoginMouseClicked
         // TODO add your handling code here:
-        String username = LUsername.getText();
-        String password = LPassword.getText();
-        if(username.isEmpty() && password.isEmpty()){
-            JOptionPane.showMessageDialog(this, "Username dan Password kosong", "Gagal Login", JOptionPane.ERROR_MESSAGE);
-        }else if(username != null && password.isEmpty()){
-            JOptionPane.showMessageDialog(this, "Password anda kosong", "Gagal",JOptionPane.ERROR_MESSAGE);
-            LUsername.setText("");
-        }else if(username.isEmpty() && password != null){
-            JOptionPane.showMessageDialog(this, "Username anda kosong", "Gagal",JOptionPane.ERROR_MESSAGE);
-            LPassword.setText("");
-        }else if((username.equals("roxyzc") == false) && password.equals("roxyzc") == false){
-            JOptionPane.showMessageDialog(this, "User tidak ditemukan", "Gagal",JOptionPane.ERROR_MESSAGE);
-            LUsername.setText("");
-            LPassword.setText("");
-        }else if((password.equals("roxyzc") == false) && username.equals("roxyzc") == true){
-            JOptionPane.showMessageDialog(this, "Passowrd salah", "Gagal",JOptionPane.ERROR_MESSAGE);
-            LPassword.setText("");
-        }else{
-            Menu n = new Menu();
-            this.setVisible(false);
-            n.setVisible(true);
+        try{
+            String username = LUsername.getText();
+            String password = LPassword.getText();
+            ConnectDB();
+                Connection connection = connect;
+                String query = "SELECT * FROM tb_users where username='"+username+"'";
+                Statement st = connection.createStatement();
+                ResultSet rs = st.executeQuery(query);
+                String AUser = null;
+                String Apassword = null;
+                while(rs.next()){
+                    AUser = rs.getString("username");
+                    Apassword = rs.getString("password");
+                }
+                st.close();
+      
+            if(username.isEmpty() && password.isEmpty()){
+                JOptionPane.showMessageDialog(this, "Username dan Password kosong", "Gagal Login", JOptionPane.ERROR_MESSAGE);
+            }else if(username != null && password.isEmpty()){
+                JOptionPane.showMessageDialog(this, "Password anda kosong", "Gagal",JOptionPane.ERROR_MESSAGE);
+                LUsername.setText("");
+            }else if(username.isEmpty() && password != null){
+                JOptionPane.showMessageDialog(this, "Username anda kosong", "Gagal",JOptionPane.ERROR_MESSAGE);
+                LPassword.setText("");
+            }else if((username.equals(AUser) == false) && password.equals(Apassword) == false){
+                JOptionPane.showMessageDialog(this, "User tidak ditemukan", "Gagal",JOptionPane.ERROR_MESSAGE);
+                LUsername.setText("");
+                LPassword.setText("");
+            }else if((password.equals(Apassword) == false) && username.equals(AUser) == true){
+                JOptionPane.showMessageDialog(this, "Passowrd salah", "Gagal",JOptionPane.ERROR_MESSAGE);
+                LPassword.setText("");
+            }else{
+                Menu n = new Menu();
+                this.setVisible(false);
+                n.setVisible(true);
+        }
+        } catch (SQLException ex) {
+            Logger.getLogger(Auth.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_LBtnLoginMouseClicked
 

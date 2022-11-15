@@ -8,7 +8,6 @@ import java.sql.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -148,11 +147,12 @@ public class Menu extends javax.swing.JFrame {
     
     private DefaultTableModel tableModel;
     private ResultSet resultSet;
+    
     private void BMLihatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BMLihatMouseClicked
          try {
              // TODO add your handling code here:
-             ConnectDB();
-             Object[] columnTitle = {"id","nama","kelas"};
+            ConnectDB();
+            Object[] columnTitle = {"id","nama","kelas"};
             tableModel = new DefaultTableModel(null,columnTitle);
             tableUser.setModel(tableModel);
             
